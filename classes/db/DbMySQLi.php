@@ -364,29 +364,6 @@ class DbMySQLiCore extends Db
     {
         $value = 'InnoDB';
 
-        $sql = 'SHOW VARIABLES WHERE Variable_name = \'have_innodb\'';
-        $result = $this->link->query($sql);
-        if (!$result) {
-            $value = 'MyISAM';
-        }
-        $row = $result->fetch_assoc();
-        if (!$row || strtolower($row['Value']) != 'yes') {
-            $value = 'MyISAM';
-        }
-
-        /* MySQL >= 5.6 */
-        $sql = 'SHOW ENGINES';
-        $result = $this->link->query($sql);
-        while ($row = $result->fetch_assoc()) {
-            if ($row['Engine'] == 'InnoDB') {
-                if (in_array($row['Support'], ['DEFAULT', 'YES'])) {
-                    $value = 'InnoDB';
-                }
-
-                break;
-            }
-        }
-
         return $value;
     }
 
