@@ -358,7 +358,7 @@ class DbPDOCore extends Db
             return false;
         }
 
-        $enginesToTest = ['InnoDB', 'MyISAM'];
+        $enginesToTest = ['InnoDB'];
         if ($engine !== null) {
             $enginesToTest = [$engine];
         }
@@ -401,7 +401,7 @@ class DbPDOCore extends Db
             return false;
         }
 
-        $enginesToTest = ['InnoDB', 'MyISAM'];
+        $enginesToTest = ['InnoDB'];
         if ($engine !== null) {
             $enginesToTest = [$engine];
         }
@@ -461,31 +461,6 @@ class DbPDOCore extends Db
     public function getBestEngine()
     {
         $value = 'InnoDB';
-
-        $sql = 'SHOW VARIABLES WHERE Variable_name = \'have_innodb\'';
-        $result = $this->link->query($sql);
-
-        if (!$result) {
-            $value = 'MyISAM';
-        } else {
-            $row = $result->fetch();
-            if (!$row || strtolower($row['Value']) != 'yes') {
-                $value = 'MyISAM';
-            }
-        }
-
-        /* MySQL >= 5.6 */
-        $sql = 'SHOW ENGINES';
-        $result = $this->link->query($sql);
-        while ($row = $result->fetch()) {
-            if ($row['Engine'] == 'InnoDB') {
-                if (in_array($row['Support'], ['DEFAULT', 'YES'])) {
-                    $value = 'InnoDB';
-                }
-
-                break;
-            }
-        }
 
         return $value;
     }
