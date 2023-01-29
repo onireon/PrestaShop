@@ -386,7 +386,7 @@ class DbMySQLiCore extends Db
             return false;
         }
 
-        $enginesToTest = ['InnoDB', 'MyISAM'];
+        $enginesToTest = ['InnoDB'];
         if ($engine !== null) {
             $enginesToTest = [$engine];
         }
@@ -426,7 +426,7 @@ class DbMySQLiCore extends Db
             return false;
         }
 
-        $enginesToTest = ['InnoDB', 'MyISAM'];
+        $enginesToTest = ['InnoDB'];
         if ($engine !== null) {
             $enginesToTest = [$engine];
         }
